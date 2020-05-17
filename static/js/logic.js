@@ -15,6 +15,7 @@ function createpopup(data) {
         + new Date(feature.properties.time) + "</p>");
     };
 
+    //select color based of magnitude 
     function switchcolor(mag) {
         switch (true) {
         case (mag < 1):
@@ -32,6 +33,7 @@ function createpopup(data) {
         };
     }; 
 
+    //create circles func
     function createCircleMarker(feature,latlng){
         let options = {
             radius:feature.properties.mag*5,
@@ -44,7 +46,8 @@ function createpopup(data) {
         // console.log(latlng);
         return L.circleMarker(latlng, options);
 
-      }
+    }
+
     var data =  L.geoJSON(data, {
         onEachFeature : onEachhoover,
         pointToLayer: createCircleMarker
@@ -75,7 +78,7 @@ function createmap(data) {
         "Street Map": streetmap,
         "Dark Map": darkmap
       };
-        // Create overlay object to hold our overlay layer
+    // Create overlay object to hold our overlay layer
     var overlayMaps = {
         Earthquakes: data
     };
@@ -88,7 +91,7 @@ function createmap(data) {
         layers: [streetmap, data]
       });
 
-      // Create a layer control
+    // Create a layer control
     // Pass in our baseMaps and overlayMaps
     // Add the layer control to the map
     L.control.layers(baseMaps, overlayMaps, {
@@ -101,11 +104,9 @@ function createmap(data) {
     var legend = L.control({ position: "bottomright" });
     legend.onAdd = function() {
         var div = L.DomUtil.create("div", "info legend");
-        // var limits = data.options.limits;
-        // var colors = data.options.colors;
         var labels = [];
 
-        // Add min & max
+        // Add legend header
         var legendInfo = "<h1>Magnitude</h1>";
 
         div.innerHTML = legendInfo;
